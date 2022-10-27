@@ -1,0 +1,39 @@
+---
+title: "Arbeidskrav"
+authors: "Kine Måkestad & Karoline Midtbø"
+format: html
+editor: visual
+language: NB
+---
+
+```{r setup, message=FALSE, echo=FALSE}
+library(tidyverse)
+library(lubridate)
+library(sf)
+library(here)
+library(tmap)
+library(sp)
+library(spdep)
+library(spatialreg)
+library(lmtest)
+library(sandwich)
+library(units)
+library(car)
+library(foreign)
+
+```
+
+# Arbeidskrav (kan finne en annen tittel)
+
+## Oppg. 1
+
+Den mest direkte illustrasjonen på hvordan private markeder kan avsløre forbrukernes betalingsvillighet er den hedoniske eiendomsverdi modellen. Modellen går ut på at en ser for seg at kjøpere velger eiendommer basert på egenskapene til boligen, som kan for eksempel være soverom og bad. Den er også basert på stedsspesifikke fasiliteter for en bolig som for eksempel er luftkvaliteten, nærhet til sentrum/parker og flomrisiko.
+
+## Oppg. 2
+
+```{r readcsv}
+kc_house_data <- read_delim("kc_house_data.csv", 
+    delim = ";", escape_double = FALSE, col_types = cols(`id;date;price;bedrooms;bathrooms;sqft_living;sqft_lot;floors;waterfront;view;condition;grade;sqft_above;sqft_basement;yr_built;yr_renovated;zipcode;lat;long;sqft_living15;sqft_lot15` = col_character()), 
+    trim_ws = TRUE)
+
+```
