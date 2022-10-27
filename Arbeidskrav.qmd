@@ -3,7 +3,7 @@ title: "Arbeidskrav"
 authors: "Kine Måkestad & Karoline Midtbø"
 format: html
 editor: visual
-language: NB
+lang: NB
 ---
 
 ```{r setup, message=FALSE, echo=FALSE}
@@ -30,6 +30,14 @@ library(foreign)
 Den mest direkte illustrasjonen på hvordan private markeder kan avsløre forbrukernes betalingsvillighet er den hedoniske eiendomsverdi modellen. Modellen går ut på at en ser for seg at kjøpere velger eiendommer basert på egenskapene til boligen, som kan for eksempel være soverom og bad. Den er også basert på stedsspesifikke fasiliteter for en bolig som for eksempel er luftkvaliteten, nærhet til sentrum/parker og flomrisiko.
 
 ## Oppg. 2
+
+### I
+
+Lastet først ned datasettet House Sales in King County, USA fra Kaggle. Deretter sjekket vi definisjonene om at de var riktige.
+
+### II
+
+Leser inn hus salgene i King County i USA som vi har lastet ned fra Kaggle.
 
 ```{r readcsv}
 kc_house_data <- read_delim("kc_house_data.csv", 
