@@ -1,7 +1,7 @@
 ---
-title: "Arbeidskrav"
+title: "Termpaper MSB205"
 authors: "Kine Måkestad & Karoline Midtbø"
-format: html
+format: pdf
 editor: visual
 lang: NB
 ---
@@ -20,6 +20,7 @@ library(sandwich)
 library(units)
 library(car)
 library(foreign)
+library(dplyr)
 
 ```
 
@@ -40,8 +41,133 @@ Lastet først ned datasettet House Sales in King County, USA fra Kaggle. Derette
 Leser inn hus salgene i King County i USA som vi har lastet ned fra Kaggle.
 
 ```{r readcsv}
-kc_house_data <- read_delim("kc_house_data.csv", 
-    delim = ";", escape_double = FALSE, col_types = cols(`id;date;price;bedrooms;bathrooms;sqft_living;sqft_lot;floors;waterfront;view;condition;grade;sqft_above;sqft_basement;yr_built;yr_renovated;zipcode;lat;long;sqft_living15;sqft_lot15` = col_character()), 
-    trim_ws = TRUE)
+kc_house_data <- read_csv("kc_house_data.csv")
+```
 
+### III
+
+Nå sorterer vi salgene etter dato.
+
+```{r sorter etter dato}
+kc_house_data <- arrange(kc_house_data, desc(date))
+```
+
+### IV
+
+I denne omgang bruker vi dplyr:: distinct til å velge siste salg der vi multiple salg av samme eiendom.
+
+```{r dplyr}
+kc_house_data <- kc_house_data %>% 
+  distinct(id, .keep_all = TRUE)
+```
+
+### V og VI
+
+Bruker st_as_sf() til å konvertere house data til et sf objekt vha. long lat og setter til geografisk projekson.
+
+```{r konvertere}
+kc_house_data_sf <- st_as_sf(kc_house_data,coords = c(x = "long", y= "lat"), crs = 4326) %>% 
+  st_transform(2926)
+```
+
+### VII
+
+Koordinater Seattle som er hentet fra Wikipedia er : 47.3622, -122,1955
+
+```{r koordinater}
+cbd <- st_sfc(st_point(c(-122.1955, 47.3622)), crs = 4326) %>%
+  st_transform(2926)
+```
+
+### VIII
+
+Her finner vi avstanden mellom punktet EPSG:2926 og samtlige hus i datasettet i luftlinje. Deretter konverterer vi det til km og legger dem inn i variabelen dest_CBD.
+
+```{r finner avstanden}
+kc_house_data_sf <- kc_house_data_sf %>% mutate(
+  dist_cbd = st_distance(cbd, ., by_element = TRUE),
+  dist_cbd_km = set_units(dist_cbd, km)
+)
+```
+
+## Oppg. 3
+
+### I og III
+
+Leser inn filen WADOH King County.
+
+```{r leser inn fil}
+kc_wadoh_map <- here("WADOH_Environmental_Health_Disparities_Index_Calculated_for_King_County___wadohehdindex_area") %>% 
+  st_read() %>% 
+  st_transform(2926)
+```
+
+### II
+
+Plukker ut variablene som er angitt i oppgaveteksten.
+
+```{r plukker ut variablene}
+kc_wadoh_map <- kc_wadoh_map %>%
+     select(
+     GEO_ID_TRT,
+     EHD_percen,#Environmental Health Index, weighted score many vars
+     linguist_2,#Pop. age 5+ speaking English less than "very well"
+     poverty_pe,#Percentage people living in poverty
+     POC_percen,#People of Color in percentage of pop. in tract
+     transporta,#% of income spent on transportation median family in tract
+     unemploy_2,#percentage unemployed
+     housing_pe,#% of households in group "Unaffordable Housing" (>30% inc.)
+     traffic_pe,#% of pop. near heavy traffic roadways
+     diesel,# nox consentration
+     ozone,# ozone consentration
+     PM25, # consentration of Particulate Matter in air
+     toxic_rele, # Toxic release from factories
+     hazardous_, # Hazardous Waste Treatment Storage and disposal Facilities
+     lead_perce, # measure of Lead paint in houses
+     superfund, # Proximity to contaminated sites on national list
+     facilities, # Proximity to Risk Management Plan Facilities
+     wastewater, # Proximity to wastewater facilities
+     sen_pop_pe, # % pop. over 65
+     socio_perc # score social economic determants, low best
+     )
+
+```
+
+### IV
+
+Laster inn acs_b19101_familyincome.
+
+```{r leser inn familyincome}
+acs_b19101_fam_inc <- read.dbf("/Users/kinemakestad/Documents/censusSHP/acs_b19101_familyincome.dbf")
+```
+
+Lager inntektsvariabelen.
+
+```{r ny inntektsvariabel}
+acs_b19101_fam_inc <- acs_b19101_fam_inc %>% 
+  mutate(low = (E19101138 + E19101139 + E19101140 + E19101141 + E19101142 + E19101143)/E19101137) %>% 
+  mutate(mid = (E19101144 + E19101145 + E19101146 + E19101147 + E19101148 + E19101149)/E19101137) %>% 
+  mutate(high = (E19101150 + E19101151 + E19101152 + E19101153)/E19101137)
+```
+
+```{r GEOIDTRT}
+acs_b19101_fam_inc <- acs_b19101_fam_inc %>% 
+  select(GEOIDTRT, low, mid, high) %>% 
+  rename(GEO_ID_TRT = GEOIDTRT)
+```
+
+```{r legger de nye variablene inn}
+kc_wadoh_map_2 <- left_join(acs_b19101_fam_inc, st_drop_geometry(kc_wadoh_map), by = "GEO_ID_TRT")
+```
+
+```{r tracts10}
+kc_tracts10 <- here("/Users/kinemakestad/Documents/censusSHP/tracts10.shp") %>% 
+  st_read() %>% 
+  st_transform(2926)
+```
+
+```{r tracts10 shore}
+kc_tracts10_shore <- here("/Users/kinemakestad/Documents/censusSHP/tracts10_shore.shp") %>% 
+  st_read() %>% 
+  st_transform(2926)
 ```
