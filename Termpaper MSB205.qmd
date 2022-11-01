@@ -21,6 +21,7 @@ library(units)
 library(car)
 library(foreign)
 library(dplyr)
+library(huxtable)
 
 ```
 
@@ -215,7 +216,7 @@ kc_tracts10_shore_env_var <- st_join(kc_house_data_sf, kc_tracts10_shore_env_dat
 st_write(kc_house_data, "../Maps/kc_house_data.gpkg", append = FALSE)
 st_write(kc_tracts10, "../Maps/kc_tracts10.gpkg", append = FALSE)
 st_write(kc_tracts10_shore, "../Maps/kc_tracts10_shore.gpkg", append = FALSE)
-st_write(kc_house_env_var, "../Maps/kc_houses_env_var.gpkg", append = FALSE)
+st_write(kc_house_env_var, "../Maps/kc_house_env_var.gpkg", append = FALSE)
 st_write(kc_tracts10_shore_env_var, "../Maps/kc_tracts10_shore_env_var.gpkg", append = FALSE)
 ```
 
@@ -341,8 +342,8 @@ Huskarakteristiska og tids-dummier
 attach(kc_house_env_var_omit)
 ```
 
-```{r modell 1}
-mod1 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + waterfront + view + condition + grade + yr_built + yr_renovated + sqft_living15 + sqft_lot15 + sqft_above + sqft_basement + year_month"
+```{r modell1}
+mod1 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_living15 + sqft_lot + sqft_lot15 + sqft_above + floors + grade + yr_built + yr_renovated + waterfront + condition + view + year_month"
 ```
 
 #### 2
@@ -350,7 +351,8 @@ mod1 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + waterf
 Huskarateristika, dist_CBD, relevante tract variabler og tids-dummier.
 
 ```{r modell 2}
-mod2 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + waterfront + view + condition + yr_built + yr_renovated + sqft_living15 + sqft_lot15 + sqft_above + sqft_basement + grade + year_month + dist_cbd_km + linguist_2 + poverty_pe + POC_percen + unemploy_2 + sen_pop_pe + facilities + wastewater + traffic_pe + diesel + transporta + housing_pe + ozone + PM25 + toxic_rele + superfund + hazardous_ + lead_perce + socio_perc"
+mod2 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_living15 + sqft_lot + sqft_lot15 + sqft_above + floors + grade + yr_built + yr_renovated + waterfront + condition + view + year_month + dist_cbd_km + linguist_2 + poverty_pe + POC_percen + unemploy_2 + sen_pop_pe + facilities + wastewater + traffic_pe + diesel + superfund + transporta + housing_pe + ozone + PM25 + toxic_rele + 
+hazardous_ + lead_perce + socio_perc"
 ```
 
 #### 3
@@ -358,7 +360,7 @@ mod2 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + waterf
 Huskarateristika, dist_CBD, EHD indeks og tids-dummier.
 
 ```{r modell 3}
-mod3 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_living15 + sqft_lot + floors + waterfront + view + condition + yr_built + yr_renovated + sqft_above + sqft_basement + grade + dist_cbd_km + EHD_percen + low + high + year_month"
+mod3 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_living15 + sqft_lot + sqft_lot15 + sqft_above + floors + grade + yr_built + yr_renovated + waterfront + condition + view + dist_cbd_km + EHD_percen + low + high + year_month"
 ```
 
 Hedoniske modeller
@@ -369,7 +371,7 @@ hedon2 <- lm(mod2, data = kc_house_env_var_omit)
 hedon3 <- lm(mod3, data = kc_house_env_var_omit)
 ```
 
-```{r huxreg}
+```{r}
 huxreg("Hedon1" = hedon1, "Hedon2" = hedon2, "Hedon3" = hedon3, error_format = "[{statistic}]", note = "{stars}. T statistics in brackets.")
 ```
 
@@ -379,19 +381,62 @@ Etter å ha sett dataen i tre ulike hedoniske modeller, kan en se at mod2 ha en 
 
 Ser på plot(km_navnet)
 
-```{r plot, mod1}
+```{r plot mod1}
 hedon1 %>%
 plot()
 ```
 
-```{r plot, mod2}
+```{r plot mod2}
 hedon2 %>% 
   plot()
 ```
 
-```{r plot, hedon3}
+```{r plot hedon3}
 hedon3 %>% 
   plot()
 ```
 
-## Oppg. 7 
+## Oppg. 7
+
+Her bruker vi en simultan test på tids-dummiene for å avgjøre om vi trenger disse i modellen.
+
+```{r linearhypothesis hedon1}
+hedon1 %>% 
+    linearHypothesis(c("year_month2014-06=0", "year_month2014-07=0",
+                       "year_month2014-08=0", "year_month2014-09=0",
+                       "year_month2014-10=0", "year_month2014-11=0",
+                       "year_month2014-12=0", "year_month2015-01=0",
+                       "year_month2015-02=0", "year_month2015-03=0",
+                       "year_month2015-04=0", "year_month2015-05=0"),
+                     white_adjust = hc3)
+```
+
+```{r linear hypothesis hedon2}
+hedon2 %>% 
+    linearHypothesis(c("year_month2014-06=0", "year_month2014-07=0",
+                       "year_month2014-08=0", "year_month2014-09=0",
+                       "year_month2014-10=0", "year_month2014-11=0",
+                       "year_month2014-12=0", "year_month2015-01=0",
+                       "year_month2015-02=0", "year_month2015-03=0",
+                       "year_month2015-04=0", "year_month2015-05=0"),
+                     white_adjust = hc4)
+```
+
+```{r linear hypothesis hedon3}
+hedon3 %>% 
+    linearHypothesis(c("year_month2014-06=0", "year_month2014-07=0",
+                       "year_month2014-08=0", "year_month2014-09=0",
+                       "year_month2014-10=0", "year_month2014-11=0",
+                       "year_month2014-12=0", "year_month2015-01=0",
+                       "year_month2015-02=0", "year_month2015-03=0",
+                       "year_month2015-04=0", "year_month2015-05=0"),
+                     white_adjust = hc1)
+```
+
+Når vi ser på disse testene ser vi på F-verdiene og p-verdiene for å se om vi skal forkaste H0. I følge testene vil vi da forkaste H0 da p-verdien er lavere signifikantnivået. Dette betyr da at vi vil kunne trenge disse tids-dummiene i modellen.
+
+## Oppg. 8
+
+### I
+
+Her laster vi inn gruppens utvalg for relevant gpkg fil.
