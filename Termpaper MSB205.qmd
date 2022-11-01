@@ -3,7 +3,7 @@ title: "Termpaper MSB205"
 authors: "Kine Måkestad & Karoline Midtbø"
 format: pdf
 editor: visual
-lang: NB
+lang: no-NB 
 ---
 
 ```{r setup, message=FALSE, echo=FALSE}
@@ -275,3 +275,55 @@ st_write(kc_house_env_var_omit, "../Maps/kc_house_env_var_omit.gpkg", append = F
 ```
 
 ## Oppg. 5
+
+### III
+
+Her generer vi en vekt fil utfra 3 nærmeste naboer.
+
+![](Screenshot/Nab3.png)
+
+Nå skal vi generere en fil utfra en en plass med 10 nærmeste naboer.
+
+![](Screenshot/Nab10.png)
+
+### IV
+
+#### Nærmeste nabo 3:
+
+Store og billige boliger.
+
+![](Screenshot/High%20low%20nab3.png)
+
+På bilde ovenfor ser man på de røde prikkene, og det er de plassene som er store og små boliger.
+
+Neste er små og dyre boliger som er markert i rosa.
+
+![](Screenshot/Low%20High%20nab3.png)
+
+Deretter kommer de små og billige boligene som er markert i blå.
+
+![](Screenshot/Low%20Low%20nab3.png)
+
+Til slutt er det de store og dyre boligene som er markert i grønn.
+
+![](Screenshot/High%20High%20nab3.png)
+
+#### Nærmeste nabo 10:
+
+Første er store og billige boligene som en kan se på bilde nedenfor som er markert i blått.
+
+![](Screenshot/High%20Low%20nab10.png)
+
+Så kommer små og dyre boliger, og det er markert i rødt.
+
+![](Screenshot/Low%20High%20nab10.png)
+
+Deretter kommer små og billige boliger, og dette er markert med grønt på kartet.
+
+![](Screenshot/Low%20Low%20nab10.png)
+
+Til slutt kommer store og dyre boligene, og de er markert med gult på kartet nedenfor.
+
+![](Screenshot/High%20High%20nab10.png)
+
+## Oppg. 6
