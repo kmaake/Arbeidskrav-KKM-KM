@@ -171,3 +171,56 @@ kc_tracts10_shore <- here("../Maps/censusSHP/tracts10_shore.shp") %>%
   st_read() %>% 
   st_transform(2926)
 ```
+
+Nå blir det brukt left join for å legge dataene inn i WADOH King County.
+
+```{r leftjoin}
+kc_tracts10_env_data <- left_join(kc_tracts10, kc_wadoh_map_2, by = "GEO_ID_TRT")
+```
+
+```{r leftjointracts10shore}
+kc_tracts10_shore_env_data <- left_join(kc_tracts10_shore, kc_wadoh_map_2, by= "GEO_ID_TRT")
+```
+
+```{r summary}
+summary(kc_tracts10)
+```
+
+```{r stjoin}
+kc_house_env_var <- st_join(kc_house_data_sf, kc_tracts10_env_data)
+kc_tracts10_shore_env_var <- st_join(kc_house_data_sf, kc_tracts10_shore_env_data)
+```
+
+```{r stwrite}
+st_write(kc_house_data, "../Maps/kc_house_data.gpkg", append = FALSE)
+st_write(kc_tracts10, "../Maps/kc_tracts10.gpkg", append = FALSE)
+st_write(kc_tracts10_shore, "../Maps/kc_tracts10_shore.gpkg", append = FALSE)
+st_write(kc_house_env_var, "../Maps/kc_houses_env_var.gpkg", append = FALSE)
+st_write(kc_tracts10_shore_env_var, "../Maps/kc_tracts10_shore_env_var.gpkg")
+```
+
+## Oppg. 4
+
+### I
+
+Her sjekker vi områdevariablene fra WADOH ved hjelp av summary for både tracts10 og tracts10 shore.
+
+```{r summary of tracts10}
+summary(kc_tracts10_env_data)
+```
+
+```{r summary of tracts10shore}
+summary(kc_tracts10_shore_env_data)
+```
+
+### II
+
+Når vi ser på disse dataene fra tracts10 både i R og i QGIS, så ser vi at kc_tracts10_env_data har en observasjon som går utenfor kommunegrensene.
+
+![](Screenshot/Kommunegrense.png)
+
+Som en kan se på dette bilde er det den lille prikken som ligger utenfor kommunegrensen.
+
+For den andre kc_tracts10_shore_env_data kan en se at det er ligger alle observasjonene innenfor kommunegrensene. Men nå vi la til shore-kartet kan en se at ved vannlinjen er det 25 observasjoner som ligger rett utenfor. Det er også grunnen til at det gir 25 NA.
+
+![](Screenshot/Vannlinje.png)
