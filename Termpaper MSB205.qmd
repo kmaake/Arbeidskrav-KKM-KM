@@ -270,7 +270,7 @@ kc_house_env_var_omit <- kc_house_env_var_omit %>%
 
 Deretter skal vi slette gpkg filen fra husdataene og lagre den påp ny.
 
-```{r slette og lagae ny}
+```{r slette og lage ny}
 st_write(kc_house_env_var_omit, "../Maps/kc_house_env_var_omit.gpkg", append = FALSE)
 ```
 
