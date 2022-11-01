@@ -28,7 +28,30 @@ library(dplyr)
 
 ## Oppg. 1
 
-Den mest direkte illustrasjonen på hvordan private markeder kan avsløre forbrukernes betalingsvillighet er den hedoniske eiendomsverdi modellen. Modellen går ut på at en ser for seg at kjøpere velger eiendommer basert på egenskapene til boligen, som kan for eksempel være soverom og bad. Den er også basert på stedsspesifikke fasiliteter for en bolig som for eksempel er luftkvaliteten, nærhet til sentrum/parker og flomrisiko.
+Bishop et al. (2020) skriver at den mest direkte illustrasjonen på hvordan private markeder kan avsløre forbrukernes betalingsvillighet er den hedoniske eiendomsverdi modellen. Modellen går ut på at en ser for seg at kjøpere velger eiendommer basert på egenskapene til boligen, som kan for eksempel være antall soverom og bad. Den er også basert på stedsspesifikke fasiliteter for en bolig som for eksempel er luftkvaliteten, nærhet til sentrum/parker og flomrisiko. 
+
+I løpet av de siste årene har forventninger til kvaliteten på dataen og den økonometrisk åpenhet økt. Det har også forbedret forståelse om hvordan en identifisert gjennom kvasi-eksperimentelle forskningsdesign forholder seg til velferdsmål, som vil si mål på betalingsvillighet. Det ble brukt rike data fra boligmarkedet i storbyområdene i en avansert økonomi i de fleste studiene, som etablerte den beste praksisen i den hedoniske modellen. Denne dataen beskriver boligtransaksjoner, egenskaper og fasiliteter som stadig blir mer tilgjengelig rundt om i verden, som gir muligheten for å bruke den hedoniske modellen. 
+
+Den deriverte prisfunksjonen kan tolkes som å indikere tilbudets implisitte priser, denne kan brukes til å beregne husholdningen marginale betalingsvilligheten for tilbudet. Den marginale betalingsvilligheten bidrar med til å informere om politikk. Den moderne hedoniske eiendomsverdimodellen er den fremste tilnærmingene til å verdsette endringer i miljøfasiliteter, da innen områder som akademisk forskning, rettssaker og offentlig politikk.
+
+Roses (1974) hadde en banebrytende artikkel om det hedoniske rammeverket. Der han delte det inn i to trinn, første trinn handler om definere markedet og andre trinn om å samle inn data. Modellen blir sett på som en likevektsmodell for å kunne forstå hva differensierte produktpriser kunne avsløre om forbrukernes etterspørsel etter produktattributter. Likevekten er forholdet mellom boligpriser og huskarakteristikk, som igjen avslører hver kjøpers marginale betalingsvillighet. Den marginale betalingsvilligheten til kjøpere kan endres over tid, som kan gjenspeiles som en endring i funksjonen for de implisitte prisene for fasilitetene. Grunnen til at den marginale betalingsvilligheten kan endres over tid kan skyldes at en øker arbeidernes produktivitet, induserer migrasjon, gir ny informasjon om fasilitetene eller endrer bekvemmeligheters nivåer, dette kan være for eksempel endringer i regler i luftkvalitet. 
+
+Dette gir et grunnlag for å kunne bruke den hedoniske eiendomsverdimodellen, og en bruker den hedoniske modellen til å estimere marginale betalingsvilligheter for miljøfasiliteter. 
+
+Første trinnet i modellen er å definere et marked. Et marked bør bli definert slik at det tilfredsstiller "loven om én prisfunksjon." Det betyr at identiske hus bør bli solgt for samme pris i et gitt marked. En kan definere marked som et stort område over kort tid, men kan også være et større område over lengre tid. For å følge opp  "loven om én prisfunksjon" gjelder det å defineret markedet som et stort område over kort tid. Da unngår en ta stilling til flytting, fordi de fysiske og økonomiske kostnadene ved å flytte ikke viser seg til å endre på ulike destinasjoner innenfor et stort område. I motsetning til dette er det mindre sannsynlig at loven om én prisfunksjon blir tilfredsstilt hvis markedet er definert til å omfatte flere storbyområder og/eller flere år. Om en skulle definert et marked som et større område over lengre tid er at det vil føre til større flyttekostnader, fordi det omfatter flere storbyområder. Dette ville påvirket den marginale betalingsvilligheten til flere, fordi en kan bli påtvunget flytting på grunn av for eksempel jobb, kan også være endringer i lokale skattepolitikk og levekostnader, som gjør at en velger å flytte. 
+
+I trinn to handler det om å samle inn data. Et tilfeldig utvalg er det beste når det kommer til datainnsamling i hedoniske eiendomsverdistudier, da av boligtransaksjonspriser og egenskaper for det aktuelle studieområdet og hovedsakelig for enebolig. Ved innsamling av data kan det oppstå utfordringer som kan oppstå i mindre enn ideelle datainnstillinger, inkludert regulering av priser, sparsomme transaksjoner og mangel på transaksjonspriser.
+
+Når en skal samle inn data om boligsalg har en forventning på at informasjonen ligge offentlig tilgjengelig, her kan det oppstå problemer som gjør at en ikke fanger opp dette. Ved å identifisere og ta vekk disse dataene kan en redusere muligheten for å få målefeil.  Dette kan være for eksempel at kjøper og selger har likt etternavn i et salg, fordi sannsynligheten for at de er slekt er stor. Er også vanlig å fjerne tvangssalg, og kjøp fra eiendomsinvesteringsforetak og uteliggere som tydelig indikerer datainntastingsfeil. 
+
+Det er også viktig å inkludere hvordan kjøpere oppfatter fasilitetsnivåene på hvert boligsted. Der forskerne må inkludere romlig interpolasjon, luftspredningsmodeller eller spådommer fra satellitter for å tildele forurensningsnivåer til hus. En kan også se på nærhet til rekreasjonssteder som strender, innsjøer og parker måles etter geografisk avstand, kjøreavstand, total reisetid eller andelen land som er viet til denne rekreasjonsbruken innenfor et geografisk område rundt et hus, det er for å se på hva som har en betydning for kjøperen. 
+
+Når dataen om salgspriser og kjennetegn ved en enemoligtransaskjon ikke er tilgjengelig, kan en bruke data om anslåtte priser, leiepriser og salg av barmark, samt romlig aggregerte oppsummeringsmål som middel eller medianer. Dette kan gi utfordringer for å kunne tolke prisfunksjonsparametere som mål på den marginale betalingsvilligheten. Det kan også være ideelt å bruke spørreundersøkelser for å kunne estimere en verdi. Det er også mulig å bruke eiendomsvurderinger eller andre selskaper. Transaksjonpriser er foretrukket fremfor en anslått pris, dette fordi predikerte priser er at de inkluderer målefeil, som korrelerer med kjøperens demografi boligkarakteristikker og nabolagsfasiliteter, og fører dermed til skjevheter i prisfunksjonens parameterestimater. Under leiepriser kan det oppstå uklarheter fordi det er opp til den som leier ut hva som er viktig, da om leieren betaler for vedlikehold og utstyr. Ofte leier en i kortere periode, og derfor prioritereren ikke fasiliteter eller naboelaget. 
+
+For å velge en økonometrisk spesifikasjon for den hedoniske prisfunksjonen,  bør en først se på at prisfunksjonen antas å være ikke-lineær.  Dette er fordi dette gir en mer nøyaktige estimater av gjennomsnittlig marginal betalingsvillighet for boligkarakteristikker, enn om det skulle vært lineære og lig-lineær.  Det tillater også at markedslikevekt gjenspeiler komplementaritet mellom fasiliteter. Med tanke på kriminalitet, støy og luftkvalitet. Det er også viktig å se på at ingen informasjon er utelatt, som da er vitkig for huskjøperen. Da med tanke på skoler, nabolag og natur. Det viktigste med denne modellen er å se på hva kjøperens  betallingsvilligheten er for miljøfasiliter
+
+\
+\
 
 ## Oppg. 2
 
@@ -186,17 +209,17 @@ kc_tracts10_shore_env_data <- left_join(kc_tracts10_shore, kc_wadoh_map_2, by= "
 summary(kc_tracts10)
 ```
 
-```{r stjoin}
+```{r join}
 kc_house_env_var <- st_join(kc_house_data_sf, kc_tracts10_env_data)
 kc_tracts10_shore_env_var <- st_join(kc_house_data_sf, kc_tracts10_shore_env_data)
 ```
 
-```{r stwrite}
+```{r}
 st_write(kc_house_data, "../Maps/kc_house_data.gpkg", append = FALSE)
 st_write(kc_tracts10, "../Maps/kc_tracts10.gpkg", append = FALSE)
 st_write(kc_tracts10_shore, "../Maps/kc_tracts10_shore.gpkg", append = FALSE)
 st_write(kc_house_env_var, "../Maps/kc_houses_env_var.gpkg", append = FALSE)
-st_write(kc_tracts10_shore_env_var, "../Maps/kc_tracts10_shore_env_var.gpkg")
+st_write(kc_tracts10_shore_env_var, "../Maps/kc_tracts10_shore_env_var.gpkg", append = FALSE)
 ```
 
 ## Oppg. 4
@@ -205,11 +228,11 @@ st_write(kc_tracts10_shore_env_var, "../Maps/kc_tracts10_shore_env_var.gpkg")
 
 Her sjekker vi områdevariablene fra WADOH ved hjelp av summary for både tracts10 og tracts10 shore.
 
-```{r summary of tracts10}
+```{r summaryoftracts10}
 summary(kc_tracts10_env_data)
 ```
 
-```{r summary of tracts10shore}
+```{r summaryoftracts10shore}
 summary(kc_tracts10_shore_env_data)
 ```
 
@@ -224,3 +247,31 @@ Som en kan se på dette bilde er det den lille prikken som ligger utenfor kommun
 For den andre kc_tracts10_shore_env_data kan en se at det er ligger alle observasjonene innenfor kommunegrensene. Men nå vi la til shore-kartet kan en se at ved vannlinjen er det 25 observasjoner som ligger rett utenfor. Det er også grunnen til at det gir 25 NA.
 
 ![](Screenshot/Vannlinje.png)
+
+### iii
+
+Her har vi droppet områdevariabelen med id 3518000180.
+
+```{r arrange}
+kc_house_env_var <- arrange(kc_house_env_var, desc(id))
+kc_house_env_var_omit <- kc_house_env_var[-c(11997),]
+```
+
+```{r stwrite}
+st_write(kc_house_env_var_omit, "../Maps/kc_house_env_var_omit.gpkg", append = FALSE)
+```
+
+Nå skal vi lage en faktor-variabel av år og måned ut fra Date.
+
+```{r year month}
+kc_house_env_var_omit <- kc_house_env_var_omit %>% 
+  mutate(year_month = substr(date, start = 1, stop = 7))
+```
+
+Deretter skal vi slette gpkg filen fra husdataene og lagre den påp ny.
+
+```{r slette og lagae ny}
+st_write(kc_house_env_var_omit, "../Maps/kc_house_env_var_omit.gpkg", append = FALSE)
+```
+
+## Oppg. 5
