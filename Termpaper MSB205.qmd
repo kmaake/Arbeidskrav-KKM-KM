@@ -50,9 +50,6 @@ Når dataen om salgspriser og kjennetegn ved en enemoligtransaskjon ikke er tilg
 
 For å velge en økonometrisk spesifikasjon for den hedoniske prisfunksjonen,  bør en først se på at prisfunksjonen antas å være ikke-lineær.  Dette er fordi dette gir en mer nøyaktige estimater av gjennomsnittlig marginal betalingsvillighet for boligkarakteristikker, enn om det skulle vært lineære og lig-lineær.  Det tillater også at markedslikevekt gjenspeiler komplementaritet mellom fasiliteter. Med tanke på kriminalitet, støy og luftkvalitet. Det er også viktig å se på at ingen informasjon er utelatt, som da er vitkig for huskjøperen. Da med tanke på skoler, nabolag og natur. Det viktigste med denne modellen er å se på hva kjøperens  betallingsvilligheten er for miljøfasiliter
 
-\
-\
-
 ## Oppg. 2
 
 ### I
@@ -327,3 +324,74 @@ Til slutt kommer store og dyre boligene, og de er markert med gult på kartet ne
 ![](Screenshot/High%20High%20nab10.png)
 
 ## Oppg. 6
+
+### I Sammenfatning av funnene fra EDA
+
+Etter å ha sett på pris i forhold til størrels epå boligen, kan en se at de små og billige boligene sentrer seg rundt Seattle sentrum. Da har vi sett i fordelingen på knear = 3 og knear = 10, der begge er nokså like. Ser en på de store og dyre boligene er de både med tre og ti naboer plasser rundt Bellevue og mer øst for Seattle. Under små og dyr boliger er mye sprendt rundt Seattle, mest utenfor sentrum området. Mens store og billige boliger er veldig sentrert i sentrum av Seattle, som de andre er det likt både med tre naboer to naboer.
+
+Etter å ha sett på Moran´s I får en verdier på tre naboer = 0,399 og med ti naboer = 0.350. Ved positiv verdi vil det si at det klynger, og perfekt klynging er 1, der våre verdier viser til litt klyning, men også psredning. Noe en kan se i kartene ovenfor. Dette vil stemme overns med Moran´s I verdier som sier at perfekt tilnærming er 0.
+
+### II
+
+#### 1
+
+Huskarakteristiska og tids-dummier
+
+```{r}
+attach(kc_house_env_var_omit)
+```
+
+```{r modell 1}
+mod1 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + waterfront + view + condition + grade + yr_built + yr_renovated + sqft_living15 + sqft_lot15 + sqft_above + sqft_basement + year_month"
+```
+
+#### 2
+
+Huskarateristika, dist_CBD, relevante tract variabler og tids-dummier.
+
+```{r modell 2}
+mod2 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + waterfront + view + condition + yr_built + yr_renovated + sqft_living15 + sqft_lot15 + sqft_above + sqft_basement + grade + year_month + dist_cbd_km + linguist_2 + poverty_pe + POC_percen + unemploy_2 + sen_pop_pe + facilities + wastewater + traffic_pe + diesel + transporta + housing_pe + ozone + PM25 + toxic_rele + superfund + hazardous_ + lead_perce + socio_perc"
+```
+
+#### 3
+
+Huskarateristika, dist_CBD, EHD indeks og tids-dummier.
+
+```{r modell 3}
+mod3 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_living15 + sqft_lot + floors + waterfront + view + condition + yr_built + yr_renovated + sqft_above + sqft_basement + grade + dist_cbd_km + EHD_percen + low + high + year_month"
+```
+
+Hedoniske modeller
+
+```{r hedoniske modeller}
+hedon1 <- lm(mod1, data = kc_house_env_var_omit)
+hedon2 <- lm(mod2, data = kc_house_env_var_omit)
+hedon3 <- lm(mod3, data = kc_house_env_var_omit)
+```
+
+```{r huxreg}
+huxreg("Hedon1" = hedon1, "Hedon2" = hedon2, "Hedon3" = hedon3, error_format = "[{statistic}]", note = "{stars}. T statistics in brackets.")
+```
+
+### iv
+
+Etter å ha sett dataen i tre ulike hedoniske modeller, kan en se at mod2 ha en bedre marginal forklaringskraft i forhold til mod3. Grunnen til dette er fordi mod3 har mindre variabler og EHD-percen inneholder alle de miljømessige varibler fra mod2. En kan se alle de variablene en trenger i mod2.
+
+Ser på plot(km_navnet)
+
+```{r plot, mod1}
+hedon1 %>%
+plot()
+```
+
+```{r plot, mod2}
+hedon2 %>% 
+  plot()
+```
+
+```{r plot, hedon3}
+hedon3 %>% 
+  plot()
+```
+
+## Oppg. 7 
