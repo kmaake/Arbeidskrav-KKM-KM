@@ -336,11 +336,7 @@ Etter å ha sett på Moran´s I får en verdier på tre naboer = 0,399 og med ti
 
 #### 1
 
-Huskarakteristiska og tids-dummier
-
-```{r}
-attach(kc_house_env_var_omit)
-```
+Huskarakteristiska og tids-dummie
 
 ```{r modell1}
 mod1 <- "price ~ bedrooms + bathrooms + sqft_living + sqft_living15 + sqft_lot + sqft_lot15 + sqft_above + floors + grade + yr_built + yr_renovated + waterfront + condition + view + year_month"
@@ -624,26 +620,15 @@ kc_lagrange_10_2000
 ```
 
 ```{r}
-SDEM_2000 <- errorsarlm(mod3, data = kc_house_env_var_omit_2000, listw = kc_house_data_2000_W, 
-                        Durbin = as.formula(~ bedrooms + bathrooms + sqft_living + sqft_living15 +
-                                                sqft_lot + sqft_lot15 + 
-                                                sqft_above + floors + grade + yr_built + 
-                                                yr_renovated + waterfront + condition + 
-                                                view + dist_cbd_km + EHD_percen + 
-                                                low + high))
+SDEM_2000 <- errorsarlm(mod3, data = kc_house_env_var_omit_2000, listw = kc_house_data_2000_W, Durbin = as.formula(~ bedrooms + bathrooms + sqft_living + sqft_living15 + sqft_lot + sqft_lot15 + sqft_above + floors + grade + yr_built + yr_renovated + waterfront + condition + view + dist_cbd_km + EHD_percen + low + high))
 ```
 
 ```{r}
-SLX_2000 <- lmSLX(mod3, data = kc_house_env_var_omit_2000, listw = kc_house_data_2000_W, 
-                  Durbin =  as.formula(~ bedrooms + bathrooms + sqft_living + sqft_living15 +
-                                           sqft_lot + sqft_lot15 + sqft_above + floors + grade +
-                                           yr_built + yr_renovated + waterfront + condition +
-                                           view + dist_cbd_km + EHD_percen + low + high))
+SLX_2000 <- lmSLX(mod3, data = kc_house_env_var_omit_2000, listw = kc_house_data_2000_W, Durbin =  as.formula(~ bedrooms + bathrooms + sqft_living + sqft_living15 + sqft_lot + sqft_lot15 + sqft_above + floors + grade + yr_built + yr_renovated + waterfront + condition + view + dist_cbd_km + EHD_percen + low + high))
 ```
 
 ```{r}
-SEM_2000 <- errorsarlm(mod3, data = kc_house_env_var_omit_2000, listw = kc_house_data_2000_W, 
-                       Durbin = FALSE)
+SEM_2000 <- errorsarlm(mod3, data = kc_house_env_var_omit_2000, listw = kc_house_data_2000_W, Durbin = FALSE)
 ```
 
 ```{r}
